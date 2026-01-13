@@ -1,7 +1,12 @@
+import Quiz from "./components/Quiz";
 import "./index.css";
 
 const App = () => {
-  return <div>App</div>;
+  return (
+    <div>
+      <Quiz />
+    </div>
+  );
 };
 
 export default App;
