@@ -1,10 +1,13 @@
-import Quiz from "./components/Quiz";
+import Quiz from "./components/Quiz.jsx";
 import "./index.css";
+import { QuizProvider } from "./contexts/quiz.js";
 
 const App = () => {
   return (
     <div>
-      <Quiz />
+      <QuizProvider>
+        <Quiz />
+      </QuizProvider>
     </div>
   );
 };
