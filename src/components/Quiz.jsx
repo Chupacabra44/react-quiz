@@ -9,7 +9,10 @@ const Quiz = () => {
   return (
     <div className="quiz">
       <div>
-        <div className="score">Queastion 1/8</div>
+        <div className="score">
+          Question {quizState.currentQuestionIndex + 1}/
+          {quizState.questions.length}
+        </div>
         <Question />
         <div
           onClick={() => dispatch({ type: "NEXT_QUESTION" })}
