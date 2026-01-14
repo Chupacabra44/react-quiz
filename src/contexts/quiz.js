@@ -7,40 +7,55 @@ const initialState = {
   questions,
   showResults: false,
   answers: shuffleAnswers(questions[0]),
+  currentAnswer: "",
+  correctAnswersCount: 0,
 };
 
 const reducer = (state, action) => {
-  if (action.type === "NEXT_QUESTION") {
-    const showResults =
-      state.currentQuestionIndex === state.questions.length - 1;
-    const currentQuestionIndex = showResults
-      ? state.currentQuestionIndex
-      : state.currentQuestionIndex + 1;
-    const answers = showResults
-      ? []
-      : shuffleAnswers(state.questions[currentQuestionIndex]);
-    console.log(showResults);
-    return {
-      ...state,
-      currentQuestionIndex,
-      showResults,
-      answers,
-    };
-  }
+  switch (action.type) {
+    case "SELECT_ANSWER": {
+      const correctAnswersCount =
+        action.payload ===
+        state.questions[state.currentQuestionIndex].correctAnswer
+          ? state.correctAnswersCount + 1
+          : state.correctAnswersCount;
+      return {
+        ...state,
+        currentAnswer: action.payload,
+        correctAnswersCount,
+      };
+    }
+    case "NEXT_QUESTION": {
+      const showResults =
+        state.currentQuestionIndex === state.questions.length - 1;
+      const currentQuestionIndex = showResults
+        ? state.currentQuestionIndex
+        : state.currentQuestionIndex + 1;
+      const answers = showResults
+        ? []
+        : shuffleAnswers(state.questions[currentQuestionIndex]);
 
-  if (action.type === "RESTART") {
-    return initialState;
+      return {
+        ...state,
+        currentQuestionIndex,
+        showResults,
+        answers,
+        currentAnswer: "",
+      };
+    }
+    case "RESTART": {
+      return initialState;
+    }
+    default: {
+      return state;
+    }
   }
-
-  return state;
 };
 
 export const QuizContext = createContext();
 
 export const QuizProvider = ({ children }) => {
   const value = useReducer(reducer, initialState);
-
-  // console.log("value", value);
 
   return <QuizContext.Provider value={value}>{children}</QuizContext.Provider>;
 };
