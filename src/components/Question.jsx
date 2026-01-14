@@ -1,7 +1,6 @@
 import Answer from "./Answer";
 import { useContext } from "react";
 import { QuizContext } from "../contexts/quiz";
-import { type } from "@testing-library/user-event/dist/type";
 
 const Question = () => {
   const [quizState, dispatch] = useContext(QuizContext);
