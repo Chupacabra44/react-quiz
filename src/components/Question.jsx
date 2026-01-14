@@ -7,15 +7,14 @@ const Question = () => {
   // console.log("quizState", quizState);
 
   const currentQuestion = quizState.questions[quizState.currentQuestionIndex];
-  // console.log(currentQuestion);
+  console.log(currentQuestion);
   return (
     <div>
       <div className="question">{currentQuestion.question}</div>
       <div className="answers">
-        <Answer />
-        <Answer />
-        <Answer />
-        <Answer />
+        {quizState.answers.map((answer, index) => (
+          <Answer key={index} answerText={answer} />
+        ))}
       </div>
     </div>
   );
